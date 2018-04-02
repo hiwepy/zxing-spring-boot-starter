@@ -69,7 +69,7 @@ public final class MatrixToImageWriter {
 	/**
 	 * 
 	 * @description: 因为二维码边框设置那里不起作用，不管设置多少，都会生成白边，所以根据网上的例子进行修改，自定义控制白边宽度， 该方法生成自定义白边框后的bitMatrix；
-	 * @author : wandalong
+	 * @author : vindell
 	 * @date 下午4:02:57 2014-10-25 
 	 * @param matrix
 	 * @param margin

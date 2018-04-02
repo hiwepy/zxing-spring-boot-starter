@@ -24,7 +24,7 @@ import com.google.zxing.spring.boot.client.MatrixToImageWriter;
  * 
  * @className: QRCodeUtils
  * @description: 二维码工具类:生成和解析二维码；可处理有logo二维码
- * @author : wandalong
+ * @author : vindell
  * @date : 下午12:57:56 2015-4-17
  * @modify by:
  * @modify date :
