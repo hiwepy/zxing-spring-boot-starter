@@ -5,12 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import com.google.zxing.spring.boot.utils.BitMatrixUtils;
-import com.google.zxing.spring.boot.utils.QRCodeUtils;
 
 import junit.framework.TestCase;
+import net.coobird.thumbnailator.Thumbnails;
 
 public class BitMatrixUtils_Test extends TestCase {
 	
+	ZxingQrCodeTemplate qrCodeTemplate = new ZxingQrCodeTemplate();
 	
 	public void testParse() throws Exception{
 		String imgPath = "D:/test.png"; 
@@ -32,9 +33,14 @@ public class BitMatrixUtils_Test extends TestCase {
 				+ "\nEMail [ jeeplus@163.com ]";
 		int width2 = 300, height2 = 300;
 
-		QRCodeUtils.toQrcode(contents2, width2, height2, new FileOutputStream(imgPath2));
+		qrCodeTemplate.qrcode(contents2, width2, height2, new FileOutputStream(imgPath2));
 		System.out.println("finished zxing encode.");
 
+		Thumbnails.of("images/a380_1280x1024.jpg")  
+	    .scale(0.25f)  
+	    .toFile("c:/a380_25%.jpg"); 
+		
+		
 		String decodeContent2 = BitMatrixUtils.parse(new File(imgPath2)).getText();
 		System.out.println("解码内容如下：" + decodeContent2);
 		System.out.println("finished zxing decode.");

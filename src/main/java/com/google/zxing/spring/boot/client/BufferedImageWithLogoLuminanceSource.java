@@ -3,22 +3,21 @@ package com.google.zxing.spring.boot.client;
 import java.awt.image.BufferedImage;
 
 public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminanceSource {
-	
+
 	private final BufferedImage image;
 	private final int left;
 	private final int top;
 
 	private static final int BLACK = 0xFF000000;
 	private static final int WHITE = 0xFFFFFFFF;
-	
-	
+
 	public BufferedImageWithLogoLuminanceSource(BufferedImage image) {
 		this(image, 0, 0, image.getWidth(), image.getHeight());
 	}
 
 	public BufferedImageWithLogoLuminanceSource(BufferedImage image, int left, int top, int width, int height) {
-		
-		super(image,left,top,width, height);
+
+		super(image, left, top, width, height);
 
 		int sourceWidth = image.getWidth();
 		int sourceHeight = image.getHeight();
@@ -34,7 +33,7 @@ public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminance
 			}
 		}
 
-		this.image = new BufferedImage(sourceWidth, sourceHeight,BufferedImage.TYPE_BYTE_GRAY);
+		this.image = new BufferedImage(sourceWidth, sourceHeight, BufferedImage.TYPE_BYTE_GRAY);
 		this.image.getGraphics().drawImage(image, 0, 0, null);
 		this.left = left;
 		this.top = top;
@@ -62,7 +61,7 @@ public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminance
 		image.getRaster().getDataElements(left, top, width, height, matrix);
 		return matrix;
 	}
-	
+
 	@Override
 	public boolean isRotateSupported() {
 		return true;

@@ -6,11 +6,11 @@ import java.io.FileOutputStream;
 
 import javax.imageio.ImageIO;
 
-import com.google.zxing.spring.boot.utils.QRCodeUtils;
-
 import junit.framework.TestCase;
 
 public class QrCodeTest extends TestCase {
+	
+	ZxingQrCodeTemplate qrCodeTemplate = new ZxingQrCodeTemplate();
 	
 	public void testEncode() {
 
@@ -40,7 +40,7 @@ public class QrCodeTest extends TestCase {
 		String imgPath = "d:/test.png"; // 保存文件名。
 
 		try {
-			QRCodeUtils.toQrcode(bulder.toString(), new FileOutputStream(imgPath));
+			qrCodeTemplate.qrcode(bulder.toString(), new FileOutputStream(imgPath));
 			
 		} catch (Exception e) {
 			  System.out.println(e.toString()); 
@@ -75,8 +75,9 @@ public class QrCodeTest extends TestCase {
 		String imgPath = "d:/test2.png"; // 保存文件名。
 		String logoPath = "H:/2600.png"; // logo文件名。
 		try {
+			
 			Image src = ImageIO.read(new File(logoPath));
-			QRCodeUtils.toQrcode(bulder.toString(),src, new FileOutputStream(imgPath),true);
+			qrCodeTemplate.qrcode(bulder.toString(),src, new FileOutputStream(imgPath),true);
 
 		} catch (Exception e) {
 			  System.out.println(e.toString()); 

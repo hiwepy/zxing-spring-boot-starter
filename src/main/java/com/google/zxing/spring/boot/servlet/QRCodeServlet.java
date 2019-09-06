@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.StringUtils;
+
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -26,13 +28,13 @@ public class QRCodeServlet extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//二维码内容
-		String content = request.getParameter("content");
+		String content = request.getParameter("text");
 		//二维码图片宽度
 		String width   = request.getParameter("w");
 		//二维码图片高度
 		String height  = request.getParameter("h");
 		
-		if(content==null||content.equals("")){
+		if(!StringUtils.hasText(content)){
 			response.setContentType("text/plain;charset=UTF-8");
 			response.getOutputStream().write("二维码内容不可为空!".getBytes("utf-8"));
 			response.getOutputStream().close();

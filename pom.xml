@@ -372,11 +372,57 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.vertsion>2.22.1</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-		<zxing.version>3.3.2</zxing.version>
+		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<zxing.version>3.4.0</zxing.version>
 	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+			    <groupId>commons-logging</groupId>
+			    <artifactId>commons-logging</artifactId>
+			    <version>${commons-logging.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-text</artifactId>
+			    <version>${commons-text.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+			<!-- Thumbnailator是一个用来生成图像缩略图的 Java类库，通过很简单的代码即可生成图片缩略图，也可直接对一整个目录的图片生成缩略图。 -->
+			<!-- 
+				Thumbnailator 是一个纯java的图片压缩工具，可以进行图片的裁剪，压缩，格式转换，旋转图片，
+				 水印处理，压缩后图片不失真，经测试，9M的图片压缩后像素不变的情况下文件大小只有800K
+			-->
+			<dependency>
+				<groupId>net.coobird</groupId>
+				<artifactId>thumbnailator</artifactId>
+				<version>${thumbnailator.version}</version>
+			</dependency>
+	 		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+			<dependency>
+			    <groupId>com.google.zxing</groupId>
+			    <artifactId>core</artifactId>
+			    <version>${zxing.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
+			<dependency>
+			    <groupId>com.google.zxing</groupId>
+			    <artifactId>javase</artifactId>
+			    <version>${zxing.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	
 	<dependencies>
 
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <scope>compile</scope>
+		</dependency>
+		
 		<!-- Java Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -384,11 +430,6 @@
 			<optional>true</optional>
 		</dependency>
 		
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -399,7 +440,7 @@
 			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
 		<!-- Core starter, including auto-configuration support, logging and YAML -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -411,12 +452,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- Spring Boot Test 依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- @ConfigurationProperties annotation processing (metadata for IDEs) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<!-- Compile dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -424,27 +472,32 @@
 		</dependency>
  		
  		<dependency>
+		   	<groupId>org.springframework</groupId>
+  			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+ 		
+ 		<dependency>
 		    <groupId>commons-logging</groupId>
 		    <artifactId>commons-logging</artifactId>
-		    <version>${commons-logging.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-text</artifactId>
-		    <version>${commons-text.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+		</dependency>
  		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
 		<dependency>
 		    <groupId>com.google.zxing</groupId>
 		    <artifactId>core</artifactId>
-		    <version>${zxing.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
 		<dependency>
 		    <groupId>com.google.zxing</groupId>
 		    <artifactId>javase</artifactId>
-		    <version>${zxing.version}</version>
 		</dependency>
 
 	</dependencies>

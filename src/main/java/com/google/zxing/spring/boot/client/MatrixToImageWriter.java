@@ -41,12 +41,12 @@ public final class MatrixToImageWriter {
 	}
 
 	/**
-	 * Renders a {@link BitMatrix} as an image, where "false" bits are rendered
-	 * as white, and "true" bits are rendered as black.
+	 * Renders a {@link BitMatrix} as an image, where "false" bits are rendered as
+	 * white, and "true" bits are rendered as black.
 	 */
 	public static BufferedImage toBufferedImage(BitMatrix matrix) {
-		//第一步：将zxing生成的二维码图标矩阵绘制到BufferedImage，边距这时较大
-		int width  = matrix.getWidth();
+		// 第一步：将zxing生成的二维码图标矩阵绘制到BufferedImage，边距这时较大
+		int width = matrix.getWidth();
 		int height = matrix.getHeight();
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		for (int x = 0; x < width; x++) {
@@ -56,27 +56,25 @@ public final class MatrixToImageWriter {
 		}
 		return image;
 	}
-	
-	
-	public static BufferedImage toBufferedImage(BitMatrix matrix,int size) {
-        //因为二维码生成时，白边无法控制，去掉原有的白边，再添加自定义白边后，二维码大小与size大小就存在差异了，为了让新生成的二维码大小还是size大小，根据size重新生成图片
-        BufferedImage image =  MatrixToImageWriter.toBufferedImage(matrix);
-        //根据size放大、缩小生成的二维码
-        return zoomInImage(image,size,size);
+
+	public static BufferedImage toBufferedImage(BitMatrix matrix, int size) {
+		// 因为二维码生成时，白边无法控制，去掉原有的白边，再添加自定义白边后，二维码大小与size大小就存在差异了，为了让新生成的二维码大小还是size大小，根据size重新生成图片
+		BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix);
+		// 根据size放大、缩小生成的二维码
+		return zoomInImage(image, size, size);
 	}
-	
-	
+
 	/**
 	 * 
-	 * @description: 因为二维码边框设置那里不起作用，不管设置多少，都会生成白边，所以根据网上的例子进行修改，自定义控制白边宽度， 该方法生成自定义白边框后的bitMatrix；
+	 * @description: 因为二维码边框设置那里不起作用，不管设置多少，都会生成白边，所以根据网上的例子进行修改，自定义控制白边宽度，
+	 *               该方法生成自定义白边框后的bitMatrix；
 	 * @author : vindell
-	 * @date 下午4:02:57 2014-10-25 
+	 * @date 下午4:02:57 2014-10-25
 	 * @param matrix
 	 * @param margin
 	 * @return
-	 * @return  BitMatrix 返回类型
-	 * @throws  
-	 * @modify by:
+	 * @return BitMatrix 返回类型
+	 * @throws @modify by:
 	 * @modify date :
 	 * @modify description : TODO(描述修改内容)
 	 */
@@ -89,7 +87,7 @@ public final class MatrixToImageWriter {
 		resMatrix.clear();
 		for (int i = margin; i < resWidth - margin; i++) { // 循环，将二维码图案绘制到新的bitMatrix中
 			for (int j = margin; j < resHeight - margin; j++) {
-				if (matrix.get(rec[0] + (i - margin), rec[1] + ( j - margin ))) {
+				if (matrix.get(rec[0] + (i - margin), rec[1] + (j - margin))) {
 					resMatrix.set(i, j);
 				}
 			}
@@ -98,23 +96,22 @@ public final class MatrixToImageWriter {
 	}
 
 	/**
-     * 图片放大缩小
-     */
-    public static BufferedImage  zoomInImage(BufferedImage  originalImage, int width, int height){
-        BufferedImage newImage = new BufferedImage(width,height,originalImage.getType());
-        Graphics g = newImage.getGraphics();
-        g.drawImage(originalImage, 0,0,width,height,null);
-        g.dispose();
-        return newImage;
-    }
+	 * 图片放大缩小
+	 */
+	public static BufferedImage zoomInImage(BufferedImage originalImage, int width, int height) {
+		BufferedImage newImage = new BufferedImage(width, height, originalImage.getType());
+		Graphics g = newImage.getGraphics();
+		g.drawImage(originalImage, 0, 0, width, height, null);
+		g.dispose();
+		return newImage;
+	}
 
 	/**
 	 * Writes a {@link BitMatrix} to a file.
 	 * 
 	 * @see #toBufferedImage(BitMatrix)
 	 */
-	public static void writeToFile(BitMatrix matrix, String format, File file)
-			throws IOException {
+	public static void writeToFile(BitMatrix matrix, String format, File file) throws IOException {
 		BufferedImage image = toBufferedImage(matrix);
 		ImageIO.write(image, format, file);
 	}
@@ -124,8 +121,7 @@ public final class MatrixToImageWriter {
 	 * 
 	 * @see #toBufferedImage(BitMatrix)
 	 */
-	public static void writeToStream(BitMatrix matrix, String format,
-			OutputStream stream) throws IOException {
+	public static void writeToStream(BitMatrix matrix, String format, OutputStream stream) throws IOException {
 		BufferedImage image = toBufferedImage(matrix);
 		ImageIO.write(image, format, stream);
 	}
