@@ -59,24 +59,14 @@ public final class MatrixToImageWriter {
 
 	public static BufferedImage toBufferedImage(BitMatrix matrix, int size) {
 		// 因为二维码生成时，白边无法控制，去掉原有的白边，再添加自定义白边后，二维码大小与size大小就存在差异了，为了让新生成的二维码大小还是size大小，根据size重新生成图片
-		BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix);
+		BufferedImage image = toBufferedImage(matrix);
 		// 根据size放大、缩小生成的二维码
 		return zoomInImage(image, size, size);
 	}
 
 	/**
-	 * 
-	 * @description: 因为二维码边框设置那里不起作用，不管设置多少，都会生成白边，所以根据网上的例子进行修改，自定义控制白边宽度，
+	 * 因为二维码边框设置那里不起作用，不管设置多少，都会生成白边，所以根据网上的例子进行修改，自定义控制白边宽度，
 	 *               该方法生成自定义白边框后的bitMatrix；
-	 * @author : vindell
-	 * @date 下午4:02:57 2014-10-25
-	 * @param matrix
-	 * @param margin
-	 * @return
-	 * @return BitMatrix 返回类型
-	 * @throws @modify by:
-	 * @modify date :
-	 * @modify description : TODO(描述修改内容)
 	 */
 	public static BitMatrix updateBit(BitMatrix matrix, int margin) {
 		int tempM = margin * 2;

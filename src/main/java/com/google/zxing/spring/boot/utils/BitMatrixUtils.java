@@ -1,7 +1,6 @@
 package com.google.zxing.spring.boot.utils;
 
 import java.awt.BasicStroke;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Shape;
@@ -34,91 +33,31 @@ import com.google.zxing.spring.boot.client.BufferedImageLuminanceSource;
 import com.google.zxing.spring.boot.client.BufferedImageWithLogoLuminanceSource;
 import com.google.zxing.spring.boot.client.MatrixToImageWriter;
 
-import net.coobird.thumbnailator.Thumbnails;
-
 public class BitMatrixUtils {
 
 	public static final String CHARSET = "utf-8";
-	
-	public static void drawLogo(BufferedImage source, File logoFile) throws IOException {
-		// 读取Logo
-		Image logo = Thumbnails.of(logoFile).asBufferedImage();
-		int logoWidth = logo.getWidth(null);
-		int logoHeight = logo.getHeight(null);
-		// 插入LOGO
-		Graphics2D graph = source.createGraphics();
-		int x = (source.getWidth() - logoWidth) / 2;
-		int y = (source.getHeight() - logoHeight) / 2;
-		graph.drawImage(logo, x, y, logoWidth, logoHeight, null);
-		Shape shape = new RoundRectangle2D.Float(x, y, logoWidth, logoHeight, 6, 6);
-		graph.setStroke(new BasicStroke(3f));
-		graph.draw(shape);
-		graph.dispose();
-	}
-	
-	public static void drawLogo(BufferedImage source, File logoFile, int logoWidth, int logoHeight) throws IOException {
-		// 进行Logo缩放
-		Image logo = Thumbnails.of(logoFile).size(logoWidth, logoHeight).asBufferedImage();
-		// 插入LOGO
-		Graphics2D graph = source.createGraphics();
-		int x = (source.getWidth() - logoWidth) / 2;
-		int y = (source.getHeight() - logoHeight) / 2;
-		graph.drawImage(logo, x, y, logoWidth, logoHeight, null);
-		Shape shape = new RoundRectangle2D.Float(x, y, logoWidth, logoHeight, 6, 6);
-		graph.setStroke(new BasicStroke(3f));
-		graph.draw(shape);
-		graph.dispose();
-	}
+	private static MultiFormatWriter mutiWriter = new MultiFormatWriter();
 	
 	public static void drawLogo(BufferedImage source, Image logo) throws IOException{
-		int logoWidth = logo.getWidth(null);
-		int logoHeight = logo.getHeight(null);
-		// 插入LOGO
+		// 绘制LOGO
+		drawLogo(source, logo, logo.getWidth(null), logo.getHeight(null));
+	}
+	
+	public static void drawLogo(BufferedImage source, Image logo, int logoWidth, int logoHeight) throws IOException {
+		// 缩放LOGO
+		BufferedImage scaleImage = ImageUtils.scale(logo, logoWidth, logoHeight);
+		// 绘制LOGO
 		Graphics2D graph = source.createGraphics();
 		int x = (source.getWidth() - logoWidth) / 2;
 		int y = (source.getHeight() - logoHeight) / 2;
-		graph.drawImage(logo, x, y, logoWidth, logoHeight, null);
-		Shape shape = new RoundRectangle2D.Float(x, y, logoWidth, logoWidth, 6, 6);
+		graph.drawImage(scaleImage, x, y, logoWidth, logoHeight, null);
+		Shape shape = new RoundRectangle2D.Float(x, y, logoWidth, logoHeight, 6, 6);
 		graph.setStroke(new BasicStroke(3f));
 		graph.draw(shape);
 		graph.dispose();
 	}
 	
-	public static void drawLogo(BufferedImage source, Image logo, int logoWidth, int logoHeight) {
-		// 进行Logo缩放
-		int width = logo.getWidth(null);
-		int height = logo.getHeight(null);
-		boolean needCompress = false;
-		// 压缩LOGO
-		if (width > logoWidth) {
-			width = logoWidth;
-			needCompress = true;
-		}
-		if (height > logoHeight) {
-			height = logoHeight;
-			needCompress = true;
-		}
-		if (needCompress) {
-			Image image = logo.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			Graphics g = tag.getGraphics();
-			g.drawImage(image, 0, 0, null); // 绘制缩小后的图
-			g.dispose();
-			logo = image;
-		}
-		// 插入LOGO
-		Graphics2D graph = source.createGraphics();
-		int x = (source.getWidth() - width) / 2;
-		int y = (source.getHeight() - height) / 2;
-		graph.drawImage(logo, x, y, width, height, null);
-		Shape shape = new RoundRectangle2D.Float(x, y, width, width, 6, 6);
-		graph.setStroke(new BasicStroke(3f));
-		graph.draw(shape);
-		graph.dispose();
-	}
-
-	@SuppressWarnings("deprecation")
-	public static BitMatrix toMatrix(String content, int width, int height, int margin, ErrorCorrectionLevel level) throws WriterException {
+	public static BitMatrix bitMatrix(String content, int width, int height, ErrorCorrectionLevel level) throws WriterException {
 		// 用于设置QR二维码参数
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
 		// 设置QR二维码的纠错级别——这里选择最高H级别
@@ -131,24 +70,22 @@ public class BitMatrixUtils {
 		 */
 		hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 		hints.put(EncodeHintType.MARGIN, 0);
-		hints.put(EncodeHintType.MAX_SIZE, 220);
-		hints.put(EncodeHintType.MIN_SIZE, 220);
 		// 写入字节矩阵；参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
-		BitMatrix byteMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints); // 写入字节矩阵。
+		BitMatrix byteMatrix = mutiWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints); // 写入字节矩阵。
 		// 对矩阵进行放大
-		byteMatrix = MatrixToImageWriter.updateBit(byteMatrix, margin);
+		//byteMatrix = MatrixToImageWriter.updateBit(byteMatrix, margin);
 		// 返回字节矩阵
 		return byteMatrix;
 	}
 
-	public static byte[] toBitMatrixBytes(String content, int width, int height, int margin, ErrorCorrectionLevel level, String formatName) throws WriterException, IOException {
+	public static byte[] bitMatrix(String content, int width, int height, ErrorCorrectionLevel level, String formatName) throws WriterException, IOException {
 		/*
 		 * 参数image表示获得的BufferedImage； 参数format表示图片的格式，比如“gif”等；
 		 * 参数out表示输出流，如果要转成Byte数组，则输出流为ByteArrayOutputStream即可；
 		 */
 		try (ByteArrayOutputStream byteArray = new ByteArrayOutputStream();){
 			// 生成加密后数据内容的二维码图片
-			BitMatrix byteMatrix = toMatrix(content, width, height, margin, level);
+			BitMatrix byteMatrix = bitMatrix(content, width, height, level);
 			// 写的byte输出流
 			MatrixToImageWriter.writeToStream(byteMatrix, formatName, byteArray);
 			// 返回图标字节内容 byte[];

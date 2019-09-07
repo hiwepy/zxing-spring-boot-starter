@@ -24,17 +24,10 @@ import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.ReaderException;
-import com.google.zxing.Result;
 import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.google.zxing.spring.boot.client.MatrixToImageWriter;
 import com.google.zxing.spring.boot.utils.BitMatrixUtils;
 
 /**
@@ -43,81 +36,156 @@ import com.google.zxing.spring.boot.utils.BitMatrixUtils;
  * @author ： <a href="https://github.com/vindell">wandl</a>
  */
 public class ZxingQrCodeTemplate {
-	
-	// 二维码边距
-	private static final int QRCODE_MARGIN = 15;
-	// 二维码尺寸
-	public final int QRCODE_SIZE = 240;
-	// LOGO宽度
-	private static final int WIDTH = 45;
-	// LOGO高度
-	private static final int HEIGHT = 45;
-	public static final String FORMAT_NAME = "png";
-	/**
+
+	// 1290*1290 860*860 430*430 344*344 258*258
+	public static final int QRCODE_258 = 258; // 258*258
+	public static final int QRCODE_344 = 344; // 344*344
+	public static final int QRCODE_430 = 430; // 430*430
+	public static final int QRCODE_860 = 860; // 860*860
+	public static final int QRCODE_1290 = 1290; // 1290*1290
+	private static final int LOGO_WIDTH = 48; // LOGO宽度
+	private static final int LOGO_HEIGHT = 48; // LOGO高度
+	private static final String FORMAT_NAME = "png";
+	private static final String BASE64_PREFIX = "data:image/png;base64,";
+
+	/*
 	 * 生成二维码(内嵌LOGO)
 	 */
 	public void qrcode(String content, Image logo, OutputStream output) throws WriterException, IOException {
-		qrcode(content, logo, output, false);
+		qrcode(content, QRCODE_258, QRCODE_258, ErrorCorrectionLevel.M, logo, output);
 	}
 
-	public void qrcode(String content, Image logo, OutputStream output)
-			throws WriterException, IOException {
-		qrcode(content, logo, output, QRCODE_SIZE, QRCODE_SIZE, QRCODE_MARGIN);
-	}
-
-	/**
+	/*
 	 * 生成二维码(内嵌LOGO)
 	 */
-	public void qrcode(String content, Image logo, OutputStream output, int width, int height, int margin) throws WriterException, IOException {
-		// 初始化二维码数据位阵
-		BitMatrix bitMatrix = BitMatrixUtils.toMatrix(content, width, height, margin);
-		// 生成图片
-		BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
-		// 判断logo是否存在
-		if (logo != null) {
-			// 插入logo
-			BitMatrixUtils.drawLogo(image, logo);
-		}
+	public void qrcode(String content, int width, int height, Image logo, OutputStream output)
+			throws WriterException, IOException {
+		qrcode(content, width, height, ErrorCorrectionLevel.M, logo, output);
+	}
+
+	/*
+	 * 生成二维码(内嵌LOGO)
+	 */
+	public void qrcode(String content, int width, int height, ErrorCorrectionLevel level, Image logo,
+			OutputStream output) throws WriterException, IOException {
+		// 二维码图片
+		BufferedImage image = qrcode(content, width, height, level, logo);
+		// 输出二维码图片流
 		ImageIO.write(image, FORMAT_NAME, output);
 	}
 
-	public void qrcode(String content, int width, int height, OutputStream output) throws WriterException, IOException {
-		// 初始化二维码数据位阵
-		BitMatrix bitMatrix = BitMatrixUtils.toMatrix(content, width, height, QRCODE_MARGIN, ErrorCorrectionLevel.M);
-		MatrixToImageWriter.writeToStream(bitMatrix, FORMAT_NAME, output);
+	/*
+	 * 生成二维码(内嵌LOGO)
+	 */
+	public BufferedImage qrcode(String content, Image logo) throws WriterException, IOException {
+		return qrcode(content, QRCODE_258, QRCODE_258, ErrorCorrectionLevel.M, logo);
 	}
 
-	public BufferedImage qrcode(String content, int width, int height, int margin) throws WriterException {
+	/*
+	 * 生成二维码(内嵌LOGO)
+	 */
+	public BufferedImage qrcode(String content, int width, int height, Image logo) throws WriterException, IOException {
+		return qrcode(content, width, height, ErrorCorrectionLevel.M, logo);
+	}
+
+	/*
+	 * 生成二维码(内嵌LOGO)
+	 */
+	public BufferedImage qrcode(String content, int width, int height, ErrorCorrectionLevel level, Image logo)
+			throws WriterException, IOException {
+		return qrcode(content, width, height, level, logo, LOGO_WIDTH, LOGO_HEIGHT);
+	}
+
+	/*
+	 * 生成二维码(内嵌LOGO)
+	 */
+	public BufferedImage qrcode(String content, int width, int height, ErrorCorrectionLevel level, Image logo,
+			int logoWidth, int logoHeight) throws WriterException, IOException {
 		// 初始化二维码数据位阵
-		BitMatrix bitMatrix = BitMatrixUtils.toMatrix(content, width, height, margin, ErrorCorrectionLevel.M);
+		BitMatrix matrix = BitMatrixUtils.bitMatrix(content, width, height, level);
+		// 生成图片
+		BufferedImage image = MatrixToImageWriter.toBufferedImage(matrix);
+		// 判断logo是否存在
+		if (logo != null) {
+			// 插入logo
+			BitMatrixUtils.drawLogo(image, logo, logoWidth, logoHeight);
+		}
+		return image;
+	}
+
+	/*
+	 * 生成二维码
+	 */
+	public BufferedImage qrcode(String content) throws WriterException, IOException {
+		return qrcode(content, QRCODE_258, QRCODE_258, ErrorCorrectionLevel.M);
+	}
+
+	/*
+	 * 生成二维码
+	 */
+	public BufferedImage qrcode(String content, int width, int height) throws WriterException, IOException {
+		return qrcode(content, width, height, ErrorCorrectionLevel.M);
+	}
+
+	/*
+	 * 生成二维码
+	 */
+	public BufferedImage qrcode(String content, int width, int height, ErrorCorrectionLevel level)
+			throws WriterException {
+		// 初始化二维码数据位阵
+		BitMatrix bitMatrix = BitMatrixUtils.bitMatrix(content, width, height, ErrorCorrectionLevel.M);
 		// 图片处理
 		return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
 
-	/**
-	 * 生成二维码(内嵌LOGO)
-	 * 
-	 * @param content
-	 * @param output
-	 * @throws Exception
+	/*
+	 * 生成二维码
 	 */
-	public void qrcode(String content, OutputStream output) throws Exception {
-		qrcode(content, null, output, false);
+	public void qrcode(String content, OutputStream output) throws WriterException, IOException {
+		qrcode(content, QRCODE_258, QRCODE_258, ErrorCorrectionLevel.M, output);
 	}
-	  
-	/**
-	 * 显示二维码图片并编码为Base64
-	 *
-	 * @param content content
-	 * @throws WriterException
-	 * @throws IOException
+
+	/*
+	 * 生成二维码
+	 */
+	public void qrcode(String content, int width, int height, OutputStream output) throws WriterException, IOException {
+		qrcode(content, width, height, ErrorCorrectionLevel.M, output);
+	}
+
+	/*
+	 * 生成二维码
+	 */
+	public void qrcode(String content, int width, int height, ErrorCorrectionLevel level, OutputStream output)
+			throws WriterException, IOException {
+		ImageIO.write(qrcode(content, width, height, level), FORMAT_NAME, output);
+	}
+
+	/*
+	 * 生成二维码并编码为Base64
 	 */
 	public String qrcodeBase64(String content) throws WriterException, IOException {
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		BufferedImage image = qrcode(content);
-		// 输出二维码图片流
-		ImageIO.write(image, "png", output);
-		return "data:image/png;base64," + Base64.getEncoder().encodeToString(output.toByteArray());
+		return qrcodeBase64(content, QRCODE_258, QRCODE_258, ErrorCorrectionLevel.M);
+	}
+
+	/*
+	 * 生成二维码并编码为Base64
+	 */
+	public String qrcodeBase64(String content, int width, int height) throws WriterException, IOException {
+		return qrcodeBase64(content, width, height, ErrorCorrectionLevel.M);
+	}
+
+	/*
+	 * 生成二维码并编码为Base64
+	 */
+	public String qrcodeBase64(String content, int width, int height, ErrorCorrectionLevel level)
+			throws WriterException, IOException {
+		try (ByteArrayOutputStream output = new ByteArrayOutputStream();) {
+			// 二维码图片
+			BufferedImage image = qrcode(content, width, height, level);
+			// 输出二维码图片流
+			ImageIO.write(image, FORMAT_NAME, output);
+			return BASE64_PREFIX + Base64.getEncoder().encodeToString(output.toByteArray());
+		}
 	}
 
 }

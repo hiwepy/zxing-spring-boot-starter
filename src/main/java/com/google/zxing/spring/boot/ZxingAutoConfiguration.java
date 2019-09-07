@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
  
 
@@ -15,6 +16,20 @@ public class ZxingAutoConfiguration implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
  
+	@Bean
+	public ZxingAztecCodeTemplate aztecCodeTemplate() {
+		return new ZxingAztecCodeTemplate();
+	}
+	
+	@Bean
+	public ZxingBarCodeTemplate barCodeTemplate() {
+		return new ZxingBarCodeTemplate();
+	}
+	
+	@Bean
+	public ZxingQrCodeTemplate qrcodeTemplate() {
+		return new ZxingQrCodeTemplate();
+	}
 	
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

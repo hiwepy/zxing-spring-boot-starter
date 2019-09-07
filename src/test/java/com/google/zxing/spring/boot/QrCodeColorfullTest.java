@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 
 import junit.framework.TestCase;
 
-public class QrCodeTest extends TestCase {
+public class QrCodeColorfullTest extends TestCase {
 	
-	ZxingQrCodeTemplate qrCodeTemplate = new ZxingQrCodeTemplate();
+	ZxingQrCodeColorfullTemplate qrCodeTemplate = new ZxingQrCodeColorfullTemplate();
 	
-	public void testEncode() {
+	public void testEncode() throws Exception {
 
 		StringBuilder bulder = new StringBuilder();
 		
@@ -37,18 +37,13 @@ public class QrCodeTest extends TestCase {
 			bulder.append("]}");
 		
 		// /String str = "{xh:3333333,kcdm:333333,cj:33333}";//二维码内容。
-		String imgPath = "F:/test1.png"; // 保存文件名。
+		String imgPath = "F:/test3.png"; // 保存文件名。
 
-		try {
+		qrCodeTemplate.qrcode("http://www.baidu.com/", new FileOutputStream(imgPath));
 			
-			qrCodeTemplate.qrcode("http://www.baidu.com/", new FileOutputStream(imgPath));
-			
-		} catch (Exception e) {
-			System.out.println(e.toString()); 
-		}
 	}
 	
-	public void testEncodeWithLogo() {
+	public void testEncodeWithLogo() throws Exception  {
 
 		StringBuilder bulder = new StringBuilder();
 		
@@ -73,16 +68,12 @@ public class QrCodeTest extends TestCase {
 			bulder.append("]}");
 		
 		// /String str = "{xh:3333333,kcdm:333333,cj:33333}";//二维码内容。
-		String imgPath = "F:/test2.png"; // 保存文件名。
+		String imgPath = "F:/test4.png"; // 保存文件名。
 		String logoPath = "D:\\workspaces\\workspace-jeebiz\\workspace-jeebiz-boot-starters\\spring-boot-starter-zxing\\logo2.jpg"; // logo文件名。
-		try {
 			
-			Image src = ImageIO.read(new File(logoPath));
-			qrCodeTemplate.qrcode("http://www.baidu.com/", src, new FileOutputStream(imgPath));
+		Image src = ImageIO.read(new File(logoPath));
+		qrCodeTemplate.qrcode("http://www.baidu.com/", src, new FileOutputStream(imgPath));
 
-		} catch (Exception e) {
-			  System.out.println(e.toString()); 
-		}
 	}
 	
 
