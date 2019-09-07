@@ -1,8 +1,6 @@
-# spring-boot-starter-axis
-axis starter for spring boot
+# spring-boot-starter-zxing
 
 ### 说明
-
 
  > 基于 Google Zxing 的 Spring Boot Starter 实现
 
@@ -34,12 +32,11 @@ axis starter for spring boot
 ``` xml
 <dependency>
 	<groupId>${project.groupId}</groupId>
-	<artifactId>spring-boot-starter-axis</artifactId>
+	<artifactId>spring-boot-starter-zxing</artifactId>
 	<version>${project.version}</version>
 </dependency>
 ```
 
 ### Sample
 
-[https://github.com/vindell/spring-boot-starter-samples/tree/master/spring-boot-sample-axis](https://github.com/vindell/spring-boot-starter-samples/tree/master/spring-boot-sample-axis "spring-boot-sample-axis")
 
