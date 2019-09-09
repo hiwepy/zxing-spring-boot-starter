@@ -1,16 +1,17 @@
 package com.google.zxing.spring.boot;
 
 import org.springframework.beans.BeansException;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
- 
 
+import com.google.zxing.common.BitMatrix;
+ 
 @Configuration
-@ConditionalOnProperty(prefix = ZxingProperties.PREFIX, value = "enabled", havingValue = "true")
+@ConditionalOnClass(BitMatrix.class)
 @EnableConfigurationProperties({ ZxingProperties.class })
 public class ZxingAutoConfiguration implements ApplicationContextAware {
 
