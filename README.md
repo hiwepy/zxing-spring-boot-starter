@@ -32,7 +32,7 @@
 <dependency>
 	<groupId>com.github.hiwepy</groupId>
 	<artifactId>zxing-spring-boot-starter</artifactId>
-	<version>${project.version}</version>
+	<version>1.0.0.RELEASE</version>
 </dependency>
 ```
 
