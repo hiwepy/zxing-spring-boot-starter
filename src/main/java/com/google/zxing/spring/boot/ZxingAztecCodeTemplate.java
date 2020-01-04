@@ -15,7 +15,7 @@
  */
 package com.google.zxing.spring.boot;
 
-/**
+/*
  * <ul>
  * <li>
  * Aztec Code是1995年，由Hand HeldProducts公司的Dr. Andrew
