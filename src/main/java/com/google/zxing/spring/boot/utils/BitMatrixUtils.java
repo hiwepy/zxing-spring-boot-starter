@@ -71,9 +71,29 @@ public class BitMatrixUtils {
 		hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 		hints.put(EncodeHintType.MARGIN, 0);
 		// 写入字节矩阵；参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
+		BitMatrix byteMatrix = mutiWriter.encode(content, BarcodeFormat.QR_CODE, width, height , hints); // 写入字节矩阵。
+		// 返回字节矩阵
+		return byteMatrix;
+	}
+
+	
+	public static BitMatrix bitMatrixWhithMargin(String content, int width, int height, ErrorCorrectionLevel level, int margin) throws WriterException {
+		// 用于设置QR二维码参数
+		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+		// 设置QR二维码的纠错级别——这里选择最高H级别
+		hints.put(EncodeHintType.ERROR_CORRECTION, level);
+		/*
+		 * 指定编码格式:注意这里utf-8一定要小写 这样就可以解决手机不能识别的问题，而且也能支持中文。
+		 * 至于原因，查看了源代码后，发现使用“UTF-8”，会在文本编码前添加一段ECI(扩充解释Extended Channel Interpretation)
+		 * 编码，就是这段编码导致手机不能解析。如果使用小写"utf-8"会使这个ECI判断失效而不影响内容编码方式。 至于详细的ECI解释，可以看《QRCode
+		 * 编码解码标准》
+		 */
+		hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
+		hints.put(EncodeHintType.MARGIN, 0);
+		// 写入字节矩阵；参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
 		BitMatrix byteMatrix = mutiWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints); // 写入字节矩阵。
 		// 对矩阵进行放大
-		//byteMatrix = MatrixToImageWriter.updateBit(byteMatrix, margin);
+		byteMatrix = MatrixToImageWriter.updateBit(byteMatrix, margin);
 		// 返回字节矩阵
 		return byteMatrix;
 	}
