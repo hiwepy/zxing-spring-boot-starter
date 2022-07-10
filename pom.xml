@@ -367,7 +367,7 @@
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
 		<thumbnailator.version>0.4.17</thumbnailator.version>
-		<zxing.version>3.4.1</zxing.version>
+		<zxing.version>3.5.0</zxing.version>
 	</properties>
 
 	<dependencyManagement>
