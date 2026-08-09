@@ -33,6 +33,7 @@ import com.google.zxing.spring.boot.client.BufferedImageLuminanceSource;
 import com.google.zxing.spring.boot.client.BufferedImageWithLogoLuminanceSource;
 import com.google.zxing.spring.boot.client.MatrixToImageWriter;
 
+/**\n * Auto-configuration for BitMatrixUtils.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
 public class BitMatrixUtils {
 
 	public static final String CHARSET = "utf-8";
