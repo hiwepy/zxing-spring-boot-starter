@@ -33,7 +33,7 @@ import com.google.zxing.spring.boot.utils.BitMatrixUtils;
 /**
  * 二维码工具类:生成和解析二维码；可处理有logo二维码
  * 
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  */
 public class ZxingQrCodeTemplate {
 
