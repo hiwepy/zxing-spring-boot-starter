@@ -2,7 +2,7 @@ package com.google.zxing.spring.boot.client;
 
 import java.awt.image.BufferedImage;
 
-/**\n * Auto-configuration for BufferedImageWithLogoLuminanceSource.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
+/**\n * Auto-configuration for BufferedImageWithLogoLuminanceSource.\n *\n * @author <a href="https://github.com/loong10k">Loong Wan</a>\n * @since 1.0.0\n */
 public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminanceSource {
 
 	private final BufferedImage image;

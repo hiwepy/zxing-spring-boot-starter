@@ -13,7 +13,7 @@ import com.google.zxing.common.BitMatrix;
 @Configuration
 @ConditionalOnClass(BitMatrix.class)
 @EnableConfigurationProperties({ ZxingProperties.class })
-/**\n * Auto-configuration for ZxingAutoConfiguration.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
+/**\n * Auto-configuration for ZxingAutoConfiguration.\n *\n * @author <a href="https://github.com/loong10k">Loong Wan</a>\n * @since 1.0.0\n */
 public class ZxingAutoConfiguration implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;

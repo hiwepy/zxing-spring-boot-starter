@@ -32,7 +32,7 @@ package com.google.zxing.spring.boot;
  *</li>
  *<ul>
  */
-/**\n * Auto-configuration for ZxingAztecCodeTemplate.\n *\n * @author [@Loong Wan](https://github.com/loong10k)\n * @since 1.0.0\n */
+/**\n * Auto-configuration for ZxingAztecCodeTemplate.\n *\n * @author <a href="https://github.com/loong10k">Loong Wan</a>\n * @since 1.0.0\n */
 public class ZxingAztecCodeTemplate {
 
 }
