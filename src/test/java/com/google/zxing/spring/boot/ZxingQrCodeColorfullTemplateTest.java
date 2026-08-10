@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>Exercises every {@code qrcode} / {@code qrcodeBase64} overload and each
  * width-dependent colour branch (258/344/430/860/1290).</p>
  *
- * @author <a href="https://github.com/loong10k">[@Loong Wan]</a>
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @DisplayName("ZxingQrCodeColorfullTemplate Tests")
