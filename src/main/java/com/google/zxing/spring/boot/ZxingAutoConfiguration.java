@@ -19,25 +19,51 @@ public class ZxingAutoConfiguration implements ApplicationContextAware {
 	private ApplicationContext applicationContext;
  
 	@Bean
+	/**
+	 * aztec Code Template.
+	 *
+	 * @return the result
+	 */
 	public ZxingAztecCodeTemplate aztecCodeTemplate() {
 		return new ZxingAztecCodeTemplate();
 	}
 	
 	@Bean
+	/**
+	 * bar Code Template.
+	 *
+	 * @return the result
+	 */
 	public ZxingBarCodeTemplate barCodeTemplate() {
 		return new ZxingBarCodeTemplate();
 	}
 	
 	@Bean
+	/**
+	 * qrcode Template.
+	 *
+	 * @return the result
+	 */
 	public ZxingQrCodeTemplate qrcodeTemplate() {
 		return new ZxingQrCodeTemplate();
 	}
 	
 	@Override
+	/**
+	 * Sets the application context.
+	 *
+	 * @param applicationContext the application context
+	 * @throws BeansException if an error occurs
+	 */
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
 
+	/**
+	 * Returns the application context.
+	 *
+	 * @return the application context
+	 */
 	public ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}

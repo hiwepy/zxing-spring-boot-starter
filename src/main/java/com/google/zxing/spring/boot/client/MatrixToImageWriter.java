@@ -31,6 +31,7 @@ import com.google.zxing.common.BitMatrix;
  * here instead of core since it depends on Java SE libraries.
  * 
  * @author Sean Owen
+ * @since 1.0.0
  */
 public final class MatrixToImageWriter {
 
@@ -57,6 +58,13 @@ public final class MatrixToImageWriter {
 		return image;
 	}
 
+	/**
+	 * to Buffered Image.
+	 *
+	 * @param matrix the matrix
+	 * @param size the size
+	 * @return the result
+	 */
 	public static BufferedImage toBufferedImage(BitMatrix matrix, int size) {
 		// 因为二维码生成时，白边无法控制，去掉原有的白边，再添加自定义白边后，二维码大小与size大小就存在差异了，为了让新生成的二维码大小还是size大小，根据size重新生成图片
 		BufferedImage image = toBufferedImage(matrix);

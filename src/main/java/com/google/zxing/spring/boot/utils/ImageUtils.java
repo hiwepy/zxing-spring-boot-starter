@@ -27,9 +27,17 @@ import net.coobird.thumbnailator.Thumbnails;
 /**
  * TODO
  * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class ImageUtils {
 
+	/**
+	 * buffered.
+	 *
+	 * @param source the source
+	 * @return the result
+	 * @throws IOException if an error occurs
+	 */
 	public static BufferedImage buffered(Image source) throws IOException {
 		if(source instanceof BufferedImage) {
 			return (BufferedImage) source;
@@ -41,10 +49,28 @@ public class ImageUtils {
 		return redraw;
 	}
 	
+	/**
+	 * scale.
+	 *
+	 * @param source the source
+	 * @param height the height
+	 * @param width the width
+	 * @return the result
+	 * @throws IOException if an error occurs
+	 */
 	public static BufferedImage scale(Image source, int height, int width) throws IOException {
 		return scale(buffered(source), height, width);
 	}
 		
+	/**
+	 * scale.
+	 *
+	 * @param source the source
+	 * @param height the height
+	 * @param width the width
+	 * @return the result
+	 * @throws IOException if an error occurs
+	 */
 	public static BufferedImage scale(BufferedImage source, int height, int width) throws IOException {
 		
 		/**
@@ -60,10 +86,28 @@ public class ImageUtils {
 		return filler(scaleImage, height, width);
 	}
 	
+	/**
+	 * filler.
+	 *
+	 * @param source the source
+	 * @param height the height
+	 * @param width the width
+	 * @return the result
+	 * @throws IOException if an error occurs
+	 */
 	public static BufferedImage filler(BufferedImage source, int height, int width) throws IOException {
 		return filler((Image) source, height, width);
 	}
 	
+	/**
+	 * filler.
+	 *
+	 * @param source the source
+	 * @param height the height
+	 * @param width the width
+	 * @return the result
+	 * @throws IOException if an error occurs
+	 */
 	public static BufferedImage filler(Image source, int height, int width) throws IOException {
 		// 补白
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

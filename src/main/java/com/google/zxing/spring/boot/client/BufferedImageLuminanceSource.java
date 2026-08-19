@@ -31,6 +31,7 @@ import java.awt.image.WritableRaster;
  * @author code@elektrowolle.de (Wolfgang Jung)
  * 
  *         Copy com.google.zxing.client.j2se.BufferedImageLuminanceSource
+ * @since 1.0.0
  */
 public class BufferedImageLuminanceSource extends LuminanceSource {
 
@@ -89,6 +90,13 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
 	}
 
 	@Override
+	/**
+	 * get Row.
+	 *
+	 * @param y the y
+	 * @param row the row
+	 * @return the result
+	 */
 	public byte[] getRow(int y, byte[] row) {
 		if (y < 0 || y >= getHeight()) {
 			throw new IllegalArgumentException("Requested row is outside the image: " + y);
@@ -103,6 +111,11 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
 	}
 
 	@Override
+	/**
+	 * Returns the matrix.
+	 *
+	 * @return the matrix
+	 */
 	public byte[] getMatrix() {
 		int width = getWidth();
 		int height = getHeight();
@@ -115,11 +128,25 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
 	}
 
 	@Override
+	/**
+	 * Returns the crop supported.
+	 *
+	 * @return the crop supported
+	 */
 	public boolean isCropSupported() {
 		return true;
 	}
 
 	@Override
+	/**
+	 * crop.
+	 *
+	 * @param left the left
+	 * @param top the top
+	 * @param width the width
+	 * @param height the height
+	 * @return the result
+	 */
 	public LuminanceSource crop(int left, int top, int width, int height) {
 		return new BufferedImageLuminanceSource(image, this.left + left, this.top + top, width, height);
 	}
@@ -135,6 +162,11 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
 	}
 
 	@Override
+	/**
+	 * rotate Counter Clockwise.
+	 *
+	 * @return the result
+	 */
 	public LuminanceSource rotateCounterClockwise() {
 		int sourceWidth = image.getWidth();
 		int sourceHeight = image.getHeight();
@@ -156,6 +188,11 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
 	}
 
 	@Override
+	/**
+	 * rotate Counter Clockwise45.
+	 *
+	 * @return the result
+	 */
 	public LuminanceSource rotateCounterClockwise45() {
 		int width = getWidth();
 		int height = getHeight();

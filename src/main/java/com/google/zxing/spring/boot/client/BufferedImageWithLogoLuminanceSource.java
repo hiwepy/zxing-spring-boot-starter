@@ -41,6 +41,13 @@ public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminance
 	}
 
 	@Override
+	/**
+	 * get Row.
+	 *
+	 * @param y the y
+	 * @param row the row
+	 * @return the result
+	 */
 	public byte[] getRow(int y, byte[] row) {
 		if (y < 0 || y >= getHeight()) {
 			throw new IllegalArgumentException("Requested row is outside the image: " + y);
@@ -54,6 +61,11 @@ public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminance
 	}
 
 	@Override
+	/**
+	 * Returns the matrix.
+	 *
+	 * @return the matrix
+	 */
 	public byte[] getMatrix() {
 		int width = getWidth();
 		int height = getHeight();
@@ -64,6 +76,11 @@ public class BufferedImageWithLogoLuminanceSource extends BufferedImageLuminance
 	}
 
 	@Override
+	/**
+	 * Returns the rotate supported.
+	 *
+	 * @return the rotate supported
+	 */
 	public boolean isRotateSupported() {
 		return true;
 	}

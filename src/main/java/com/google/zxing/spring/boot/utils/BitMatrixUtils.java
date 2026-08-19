@@ -39,11 +39,27 @@ public class BitMatrixUtils {
 	public static final String CHARSET = "utf-8";
 	private static MultiFormatWriter mutiWriter = new MultiFormatWriter();
 	
+	/**
+	 * draw Logo.
+	 *
+	 * @param source the source
+	 * @param logo the logo
+	 * @throws IOException if an error occurs
+	 */
 	public static void drawLogo(BufferedImage source, Image logo) throws IOException{
 		// 绘制LOGO
 		drawLogo(source, logo, logo.getWidth(null), logo.getHeight(null));
 	}
 	
+	/**
+	 * draw Logo.
+	 *
+	 * @param source the source
+	 * @param logo the logo
+	 * @param logoWidth the logo width
+	 * @param logoHeight the logo height
+	 * @throws IOException if an error occurs
+	 */
 	public static void drawLogo(BufferedImage source, Image logo, int logoWidth, int logoHeight) throws IOException {
 		// 缩放LOGO
 		BufferedImage scaleImage = ImageUtils.scale(logo, logoWidth, logoHeight);
@@ -58,6 +74,16 @@ public class BitMatrixUtils {
 		graph.dispose();
 	}
 	
+	/**
+	 * bit Matrix.
+	 *
+	 * @param content the content
+	 * @param width the width
+	 * @param height the height
+	 * @param level the level
+	 * @return the result
+	 * @throws WriterException if an error occurs
+	 */
 	public static BitMatrix bitMatrix(String content, int width, int height, ErrorCorrectionLevel level) throws WriterException {
 		// 用于设置QR二维码参数
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
@@ -78,6 +104,17 @@ public class BitMatrixUtils {
 	}
 
 	
+	/**
+	 * bit Matrix With Margin.
+	 *
+	 * @param content the content
+	 * @param width the width
+	 * @param height the height
+	 * @param level the level
+	 * @param margin the margin
+	 * @return the result
+	 * @throws WriterException if an error occurs
+	 */
 	public static BitMatrix bitMatrixWithMargin(String content, int width, int height, ErrorCorrectionLevel level, int margin) throws WriterException {
 		// 用于设置QR二维码参数
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
@@ -99,6 +136,18 @@ public class BitMatrixUtils {
 		return byteMatrix;
 	}
 
+	/**
+	 * bit Matrix.
+	 *
+	 * @param content the content
+	 * @param width the width
+	 * @param height the height
+	 * @param level the level
+	 * @param formatName the format name
+	 * @return the result
+	 * @throws WriterException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static byte[] bitMatrix(String content, int width, int height, ErrorCorrectionLevel level, String formatName) throws WriterException, IOException {
 		/*
 		 * 参数image表示获得的BufferedImage； 参数format表示图片的格式，比如“gif”等；
@@ -115,22 +164,55 @@ public class BitMatrixUtils {
 		}
 	}
 
+	/**
+	 * parse.
+	 *
+	 * @param bytes the bytes
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parse(byte[] bytes) throws ReaderException, IOException {
 		// 将bytes作为输入流；
 		return parse(new ByteArrayInputStream(bytes));
 	}
 
+	/**
+	 * parse.
+	 *
+	 * @param file the file
+	 * @return the result
+	 * @throws FileNotFoundException if an error occurs
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parse(File file) throws FileNotFoundException, ReaderException, IOException {
 		// 将bytes作为输入流；
 		return parse(new FileInputStream(file));
 	}
 
+	/**
+	 * parse.
+	 *
+	 * @param in the in
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parse(InputStream in) throws ReaderException, IOException {
 		// 将in作为输入流，读取图片存入image中，而这里in可以为ByteArrayInputStream();
 		BufferedImage image = ImageIO.read(in);
 		return parse(image);
 	}
 	
+	/**
+	 * parse.
+	 *
+	 * @param image the image
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parse(BufferedImage image) throws ReaderException, IOException {
 		if (image == null) {
 			System.out.println("Could not decode image");
@@ -153,17 +235,41 @@ public class BitMatrixUtils {
 		return new MultiFormatReader().decode(bitmap, hints);
 	}
 
+	/**
+	 * parse With Logo.
+	 *
+	 * @param bytes the bytes
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parseWithLogo(byte[] bytes) throws ReaderException, IOException {
 		// 将bytes作为输入流；
 		return parseWithLogo(new ByteArrayInputStream(bytes));
 	}
 	
+	/**
+	 * parse With Logo.
+	 *
+	 * @param in the in
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parseWithLogo(InputStream in) throws ReaderException, IOException {
 		// 将in作为输入流，读取图片存入image中，而这里in可以为ByteArrayInputStream();
 		BufferedImage image = ImageIO.read(in);
 		return parse(image);
 	}
 	
+	/**
+	 * parse With Logo.
+	 *
+	 * @param image the image
+	 * @return the result
+	 * @throws ReaderException if an error occurs
+	 * @throws IOException if an error occurs
+	 */
 	public static Result parseWithLogo(BufferedImage image) throws ReaderException, IOException {
 		
 		if (image == null) {

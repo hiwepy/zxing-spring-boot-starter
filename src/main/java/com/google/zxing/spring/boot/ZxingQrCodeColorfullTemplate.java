@@ -35,6 +35,7 @@ import com.google.zxing.spring.boot.utils.ImageUtils;
  * 二维码工具类:生成和解析二维码；可处理有logo二维码
  * 
  * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class ZxingQrCodeColorfullTemplate {
 
@@ -91,6 +92,16 @@ public class ZxingQrCodeColorfullTemplate {
 		return qrcode(content, width, height, ErrorCorrectionLevel.M, logo);
 	}
 
+	/**
+	 * qrcode.
+	 *
+	 * @param content the content
+	 * @param width the width
+	 * @param height the height
+	 * @param level the level
+	 * @param logo the logo
+	 * @return the result
+	 */
 	public BufferedImage qrcode(String content, int width, int height, ErrorCorrectionLevel level, Image logo)
 			throws WriterException, IOException {
 		return qrcode(content, width, height, level, logo, LOGO_WIDTH, LOGO_HEIGHT, LOGO_MARGIN);
